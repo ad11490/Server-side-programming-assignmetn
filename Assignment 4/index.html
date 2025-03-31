@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Fundamentals Project</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            cursor: pointer;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        .todo-container {
+            margin-top: 20px;
+        }
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .todo-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .todo-actions button {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        .complete-btn {
+            background-color: #28a745;
+        }
+        .chatbot-container {
+            height: 400px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 18px;
+            max-width: 70%;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .bot-message {
+            background-color: #e9e9eb;
+            color: black;
+            align-self: flex-start;
+        }
+        #weatherData {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JavaScript Fundamentals Project</h1>
+        <p>Current Date & Time: <span id="current-datetime"></span></p>
+    </header>
+
+    <div class="tab-container">
+        <div class="tab active" onclick="openTab(event, 'todoTab')">To-Do List</div>
+        <div class="tab" onclick="openTab(event, 'calculatorTab')">BMI Calculator</div>
+        <div class="tab" onclick="openTab(event, 'formTab')">Form Validation</div>
+        <div class="tab" onclick="openTab(event, 'chatbotTab')">Simple Chatbot</div>
+        <div class="tab" onclick="openTab(event, 'ajaxTab')">Weather API</div>
+        <div class="tab" onclick="openTab(event, 'dynamicTab')">Dynamic Table</div>
+    </div>
+
+    <div id="todoTab" class="tab-content active">
+        <h2>To-Do List Application</h2>
+        <div class="form-group">
+            <input type="text" id="todoInput" placeholder="Add a new task...">
+            <div class="error" id="todoError">Please enter a task</div>
+        </div>
+        <button id="addTodoBtn">Add Task</button>
+        <div class="todo-container">
+            <h3>Your Tasks</h3>
+            <ul class="todo-list" id="todoList"></ul>
+        </div>
+    </div>
+
+    <div id="calculatorTab" class="tab-content">
+        <h2>BMI Calculator</h2>
+        <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" placeholder="Enter your weight">
+            <div class="error" id="weightError">Please enter a valid weight</div>
+        </div>
+        <div class="form-group">
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" placeholder="Enter your height">
+            <div class="error" id="heightError">Please enter a valid height</div>
+        </div>
+        <button id="calculateBmiBtn">Calculate BMI</button>
+        <div id="bmiResult" style="margin-top: 20px;"></div>
+    </div>
+
+    <div id="formTab" class="tab-content">
+        <h2>Registration Form with Validation</h2>
+        <form id="registrationForm" novalidate>
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name">
+                <div class="error" id="nameError">Please enter a valid name</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email">
+                <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number">
+                <div class="error" id="phoneError">Please enter a valid phone number</div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+                <div class="error" id="passwordError">Password must include uppercase, lowercase, number, and special character</div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                <div class="error" id="confirmPasswordError">Passwords do not match</div>
+            </div>
+            <button type="submit" id="submitFormBtn">Register</button>
+        </form>
+    </div>
+
+    <div id="chatbotTab" class="tab-content">
+        <h2>Simple JavaScript Chatbot</h2>
+        <div class="chatbot-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">Hello! I'm a simple JavaScript chatbot. How can I help you today?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type your message...">
+                <button id="sendMessageBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ajaxTab" class="tab-content">
+        <h2>Weather Information with AJAX</h2>
+        <div class="form-group">
+            <label for="cityInput">Enter City Name</label>
+            <input type="text" id="cityInput" placeholder="Enter city name">
+        </div>
+        <button id="getWeatherBtn">Get Weather</button>
+        <div id="weatherData"></div>
+    </div>
+
+    <div id="dynamicTab" class="tab-content">
+        <h2>Dynamic User Table</h2>
+        <button id="generateUsersBtn">Generate Random Users</button>
+        <div id="userTableContainer" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        const appName = "JavaScript Fundamentals";
+        let taskCount = 0;
+        var isFormValid = false;
+
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('current-datetime').textContent = now.toLocaleDateString('en-US', options);
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            const tabs = document.getElementsByClassName("tab");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            
+            evt.currentTarget.classList.add("active");
+        }
+
+        document.getElementById('addTodoBtn').addEventListener('click', addTodoItem);
+        document.getElementById('todoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTodoItem();
+            }
+        });
+
+        function addTodoItem() {
+            const todoInput = document.getElementById('todoInput');
+            const todoError = document.getElementById('todoError');
+            const todoValue = todoInput.value.trim();
+            
+            if (todoValue === '') {
+                todoError.style.display = 'block';
+                return;
+            } else {
+                todoError.style.display = 'none';
+            }
+            
+            const todoList = document.getElementById('todoList');
+            const li = document.createElement('li');
+            li.className = 'todo-item';
+            
+            taskCount++;
+            
+            li.innerHTML = `
+                <span class="todo-text">${todoValue}</span>
+                <div class="todo-actions">
+                    <button class="complete-btn" onclick="toggleComplete(this.parentElement.parentElement)">Complete</button>
+                    <button class="delete-btn" onclick="confirmDelete(this.parentElement.parentElement)">Delete</button>
+                </div>
+            `;
+            
+            todoList.appendChild(li);
+            
+            todoInput.value = '';
+            
+            alert(`Task "${todoValue}" added successfully!`);
+        }
+
+        function toggleComplete(todoItem) {
+            todoItem.classList.toggle('completed');
+        }
+
+        function confirmDelete(todoItem) {
+            const todoText = todoItem.querySelector('.todo-text').textContent;
+            const isConfirmed = confirm(`Are you sure you want to delete task "${todoText}"?`);
+            
+            if (isConfirmed) {
+                todoItem.remove();
+                taskCount--;
+            }
+        }
+
+        document.getElementById('calculateBmiBtn').addEventListener('click', calculateBMI);
+
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const weightError = document.getElementById('weightError');
+            const heightError = document.getElementById('heightError');
+            const resultElement = document.getElementById('bmiResult');
+            
+            let isValid = true;
+            
+            if (isNaN(weight) || weight <= 0) {
+                weightError.style.display = 'block';
+                isValid = false;
+            } else {
+                weightError.style.display = 'none';
+            }
+            
+            if (isNaN(height) || height <= 0) {
+                heightError.style.display = 'block';
+                isValid = false;
+            } else {
+                heightError.style.display = 'none';
+            }
+            
+            if (!isValid) {
+                resultElement.innerHTML = '';
+                return;
+            }
+            
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            
+            let category;
+            if (bmi < 18.5) {
+                category = 'Underweight';
+            } else if (bmi < 25) {
+                category = 'Normal weight';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+            } else {
+                category = 'Obese';
+            }
+            
+            resultElement.innerHTML = `
+                <h3>Your BMI Result</h3>
+                <p>BMI: <strong>${bmi.toFixed(2)}</strong></p>
+                <p>Category: <strong>${category}</strong></p>
+            `;
+        }
+
+        const form = document.getElementById('registrationForm');
+        const nameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        
+        nameInput.addEventListener('input', validateName);
+        emailInput.addEventListener('input', validateEmail);
+        phoneInput.addEventListener('input', validatePhone);
+        passwordInput.addEventListener('input', validatePassword);
+        confirmPasswordInput.addEventListener('input', validateConfirmPassword);
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isPhoneValid = validatePhone();
+            const isPasswordValid = validatePassword();
+            const isConfirmPasswordValid = validateConfirmPassword();
+            
+            isFormValid = isNameValid && isEmailValid && isPhoneValid && isPasswordValid && isConfirmPasswordValid;
+            
+            if (isFormValid) {
+                alert('Registration successful!');
+                
+                form.reset();
+                hideAllErrors();
+            } else {
+                alert('Please fix the errors in the form.');
+            }
+        });
+        
+        function validateName() {
+            const name = nameInput.value.trim();
+            const nameError = document.getElementById('nameError');
+            
+            if (name === '' || name.length < 2) {
+                nameError.style.display = 'block';
+                return false;
+            } else {
+                nameError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            const emailError = document.getElementById('emailError');
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            
+            if (!emailPattern.test(email)) {
+                emailError.style.display = 'block';
+                return false;
+            } else {
+                emailError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validatePhone() {
+            const phone = phoneInput.value.trim();
+            const phoneError = document.getElementById('phoneError');
+            const phonePattern = /^\d{10}$/;
+            
+            if (!phonePattern.test(phone)) {
+                phoneError.style.display = 'block';
+                return false;
+            } else {
+                phoneError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validatePassword() {
+            const password = passwordInput.value;
+            const passwordError = document.getElementById('passwordError');
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            
+            if (!passwordPattern.test(password)) {
+                passwordError.style.display = 'block';
+                return false;
+            } else {
+                passwordError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateConfirmPassword() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            
+            if (password !== confirmPassword) {
+                confirmPasswordError.style.display = 'block';
+                return false;
+            } else {
+                confirmPasswordError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function hideAllErrors() {
+            const errors = document.getElementsByClassName('error');
+            for (let i = 0; i < errors.length; i++) {
+                errors[i].style.display = 'none';
+            }
+        }
+
+        document.getElementById('sendMessageBtn').addEventListener('click', sendChatMessage);
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+        function sendChatMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const userMessage = chatInput.value.trim();
+            
+            if (userMessage === '') return;
+            
+            appendMessage(userMessage, 'user-message');
+            
+            setTimeout(() => {
+                const botResponse = generateBotResponse(userMessage);
+                appendMessage(botResponse, 'bot-message');
+            }, 500);
+            
+            chatInput.value = '';
+        }
+
+        function appendMessage(message, className) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = `message ${className}`;
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateBotResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+                return 'Hello there! How can I help you today?';
+            } else if (message.includes('name')) {
+                return 'My name is JavaBot. I am a simple JavaScript chatbot.';
+            } else if (message.includes('weather')) {
+                return 'You can check the weather in the Weather API tab!';
+            } else if (message.includes('bmi')) {
+                return 'Try our BMI calculator in the BMI Calculator tab!';
+            } else if (message.includes('todo') || message.includes('task')) {
+                return 'You can manage your tasks in the To-Do List tab.';
+            } else if (message.includes('thank')) {
+                return "You're welcome! Feel free to ask if you need more help.";
+            } else if (message.includes('bye') || message.includes('goodbye')) {
+                return 'Goodbye! Feel free to chat again later.';
+            } else if (message.includes('help')) {
+                return 'I can help with basic information. Try asking about any of the tabs in this application.';
+            } else {
+                const randomNum = Math.floor(Math.random() * 4);
+                switch(randomNum) {
+                    case 0:
+                        return "I'm not sure I understand. Could you rephrase that?";
+                    case 1:
+                        return "Interesting! Tell me more about that.";
+                    case 2:
+                        return "I'm still learning. Could you try a different question?";
+                    default:
+                        return "I don't have information about that yet.";
+                }
+            }
+        }
+
+        document.getElementById('getWeatherBtn').addEventListener('click', getWeather);
+
+        function getWeather() {
+            const cityInput = document.getElementById('cityInput').value.trim();
+            const weatherData = document.getElementById('weatherData');
+            
+            if (cityInput === '') {
+                weatherData.innerHTML = '<p style="color: red;">Please enter a city name</p>';
+                return;
+            }
+            
+            weatherData.innerHTML = '<p>Loading weather data...</p>';
+            
+            setTimeout(() => {
+                const temperature = Math.floor(Math.random() * 35) + 5;
+                const conditions = ['Sunny', 'Cloudy', 'Rainy', 'Windy', 'Snowy'];
+                const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
+                const humidity = Math.floor(Math.random() * 60) + 30;
+                const windSpeed = Math.floor(Math.random() * 20) + 1;
+                
+                weatherData.innerHTML = `
+                    <h3>Weather in ${cityInput}</h3>
+                    <p><strong>Temperature:</strong> ${temperature}°C</p>
+                    <p><strong>Conditions:</strong> ${randomCondition}</p>
+                    <p><strong>Humidity:</strong> ${humidity}%</p>
+                    <p><strong>Wind Speed:</strong> ${windSpeed} km/h</p>
+                    <p><em>Note: This is simulated data. In a real application, we would fetch from OpenWeather API or similar.</em></p>
+                `;
+            }, 1000);
+        }
+
+        document.getElementById('generateUsersBtn').addEventListener('click', generateUsers);
+
+        function generateUsers() {
+            const userTableContainer = document.getElementById('userTableContainer');
+            const numUsers = 10;
+            
+            const users = [];
+            
+            const firstNames = ['John', 'Jane', 'Michael', 'Emily', 'David', 'Sarah', 'James', 'Emma', 'Robert', 'Olivia'];
+            const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis', 'Garcia', 'Rodriguez', 'Wilson'];
+            const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
+            
+            for (let i = 0; i < numUsers; i++) {
+                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const age = Math.floor(Math.random() * 50) + 18;
+                const city = cities[Math.floor(Math.random() * cities.length)];
+                const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
+                
+                users.push({
+                    id: i + 1,
+                    name: `${firstName} ${lastName}`,
+                    age: age,
+                    city: city,
+                    email: email
+                });
+            }
+            
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>City</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            users.forEach(user => {
+                tableHTML += `
+                    <tr>
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.age}</td>
+                        <td>${user.city}</td>
+                        <td>${user.email}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            userTableContainer.innerHTML = tableHTML;
+            
+            setTimeout(() => {
+                const userName = prompt("What's your name? We'll add you to the table!");
+                if (userName) {
+                    const newRow = document.createElement('tr');
+                    const newUser = {
+                        id: users.length + 1,
+                        name: userName,
+                        age: Math.floor(Math.random() * 50) + 18,
+                        city: cities[Math.floor(Math.random() * cities.length)],
+                        email: `${userName.toLowerCase().replace(' ', '.')}@example.com`
+                    };
+                    
+                    newRow.innerHTML = `
+                        <td>${newUser.id}</td>
+                        <td>${newUser.name}</td>
+                        <td>${newUser.age}</td>
+                        <td>${newUser.city}</td>
+                        <td>${newUser.email}</td>
+                    `;
+                    
+                    document.querySelector('tbody').appendChild(newRow);
+                    
+                    newRow.style.backgroundColor = '#ffffcc';
+                    newRow.addEventListener('mouseover', function() {
+                        this.style.backgroundColor = '#ffcc00';
+                    });
+                    newRow.addEventListener('mouseout', function() {
+                        this.style.backgroundColor = '#ffffcc';
+                    });
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
