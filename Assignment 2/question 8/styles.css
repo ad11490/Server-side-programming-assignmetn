@@ -1,0 +1,118 @@
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+header {
+  background-color: #004080;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  width: 60px;
+  height: 60px;
+}
+
+/* Navigation Bar */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  background-color: #ffcc00;
+  color: black;
+  border-radius: 5px;
+}
+
+/* Main Content */
+section {
+  padding: 20px;
+  background: white;
+  margin: 20px auto;
+  width: 80%;
+  box-shadow: 0px 0px 10px gray;
+  border-radius: 8px;
+}
+
+h1, h2, h3 {
+  color: #004080;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+table, th, td {
+  border: 1px solid gray;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Forms */
+form {
+  width: 60%;
+  margin: 0 auto;
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="submit"] {
+  background-color: #004080;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #ffcc00;
+  color: black;
+}
+
+/* Footer */
+footer {
+  background-color: #004080;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
