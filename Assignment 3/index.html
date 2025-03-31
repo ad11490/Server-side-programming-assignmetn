@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive CSS3 Styling</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <div class="logo">Your Logo</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </nav>
+    </header>
+
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Our Website</h1>
+            <p>A demonstration of CSS3 features and styling techniques</p>
+            <button class="cta-button">Learn More</button>
+        </div>
+    </section>
+
+
+    <section id="about" class="content-section">
+        <h2>About Us</h2>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://via.placeholder.com/300" alt="Placeholder">
+                </div>
+                <div class="card-content">
+                    <h3>Our Mission</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://via.placeholder.com/300" alt="Placeholder">
+                </div>
+                <div class="card-content">
+                    <h3>Our Vision</h3>
+                    <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <section id="services" class="parallax-section">
+        <div class="parallax-content">
+            <h2>Our Services</h2>
+            <div class="service-grid">
+                <div class="service-item">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Web Development</h3>
+                    <p>Custom web solutions tailored to your needs.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>Web Design</h3>
+                    <p>Creative and responsive design solutions.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Apps</h3>
+                    <p>Cross-platform mobile application development.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-search"></i>
+                    <h3>SEO Services</h3>
+                    <p>Improve your visibility and rankings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="contact" class="content-section">
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-form">
+                <form>
+                    <input type="text" placeholder="Your Name">
+                    <input type="email" placeholder="Your Email">
+                    <textarea placeholder="Your Message"></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Web Street, Internet City</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@yourwebsite.com</p>
+            </div>
+        </div>
+    </section>
+
+ 
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>&copy; 2025 Your Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+      
+        document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+</html>
